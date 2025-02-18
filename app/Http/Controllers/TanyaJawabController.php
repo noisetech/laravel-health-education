@@ -10,16 +10,18 @@ class TanyaJawabController extends Controller
 {
     public function index()
     {
-        $doker = Dokter::where('status', 'aktif')->get();
+        $dokters = Dokter::where('status', 'aktif')->get();
 
-        return view('pages.tanya-jawab.index', compact('doker'));
+        return view('pages.tanya-jawab.index', compact('dokters'));
     }
 
     public function getMessage($dokterId)
     {
         $messages = Pertanyaan::where(function ($query) use ($dokterId) {
-            $query->where('user_id', auth()->id())
-                ->where('dokter_id', $dokterId);
+            $query->where([
+                    'user_id' => auth()->user()->id,
+                    'dokter_id' => $dokterId
+                ]);
         })->orderBy('created_at', 'asc')->get();
 
         return response()->json($messages);

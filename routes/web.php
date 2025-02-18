@@ -6,7 +6,9 @@ use App\Http\Controllers\KategoriArtikelControlller;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagArtikelController;
+use App\Http\Controllers\TanyaJawabController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoEdukasiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +28,23 @@ Route::get('/', function () {
 });
 
 
-Route::prefix('internal')->group(function () {
+Route::prefix('internal')
+->middleware('auth')
+->group(function () {
+
+    // video edukasi
+    Route::get('video-edukasi', [VideoEdukasiController::class, 'index'])
+        ->name('video_edukasi');
+    Route::get('video-edukasi/tambah', [VideoEdukasiController::class, 'tambah'])
+        ->name('video_edukasi.tambah');
+    Route::post('video-edukasi/simpan', [VideoEdukasiController::class, 'simpan'])
+        ->name('video_edukasi.simpan');
+    Route::get('video-edukasi/edit/{id}', [VideoEdukasiController::class, 'edit'])
+        ->name('video_edukasi.edit');
+    Route::put('video-edukasi/update/{id}', [VideoEdukasiController::class, 'update'])
+        ->name('video_edukasi.update');
+    Route::get('video-edukasi/hapus/{id}', [VideoEdukasiController::class, 'hapus'])
+        ->name('video_edukasi.hapus');
 
 
     // dashboard
@@ -34,19 +52,22 @@ Route::prefix('internal')->group(function () {
         ->name('dashboard');
 
     // permission
-    Route::get('permission', [PermissionController::class, 'index'])
-        ->name('permission');
-    Route::get('permission', [PermissionController::class, 'tambah'])
-        ->name('permission.tambah');
-    Route::post('permission/simpan', [PermissionController::class, 'simpan'])
-        ->name('permission.simpan');
-    Route::get('permission/edit/{id}', [PermissionController::class, 'edit'])
-        ->name('permission.edit');
-    Route::put('permission/update/{id}', [PermissionController::class, 'update'])
-        ->name('permission.update');
-    Route::get('permission/hapus/{id}', [PermissionController::class, 'hapus'])
-        ->name('permission.hapus');
+    Route::get('permissions', [PermissionController::class, 'index'])
+        ->name('permissions');
+    Route::get('permissions/tambah', [PermissionController::class, 'tambah'])
+        ->name('permissions.tambah');
+    Route::post('permissions/simpan', [PermissionController::class, 'simpan'])
+        ->name('permissions.simpan');
+    Route::get('permissions/edit/{id}', [PermissionController::class, 'edit'])
+        ->name('permissions.edit');
+    Route::put('permissions/update/{id}', [PermissionController::class, 'update'])
+        ->name('permissions.update');
+    Route::get('permissions/hapus/{id}', [PermissionController::class, 'hapus'])
+        ->name('permissions.hapus');
 
+    // tanya jawab
+    Route::get('tanya-jawab', [TanyaJawabController::class, 'index'])
+        ->name('tanya_jawab');
 
     Route::get('role', [RoleController::class, 'index'])
         ->name('role');
@@ -76,6 +97,7 @@ Route::prefix('internal')->group(function () {
         ->name('user.hapus');
 
 
+    // dokter
 
     // kategori artikel
     Route::get('/kategori-artikel', [KategoriArtikelControlller::class, 'index'])

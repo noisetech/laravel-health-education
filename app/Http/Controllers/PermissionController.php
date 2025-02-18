@@ -9,8 +9,8 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        $permission = Permission::orderBy('name', 'asc')->paginate(5);
-        return view('pages.permission.index', compact('permission'));
+        $permissions = Permission::latest()->paginate(10);
+        return view('pages.permission.index', compact('permissions'));
     }
 
     public function tambah()
@@ -31,7 +31,7 @@ class PermissionController extends Controller
         $permission->guard_name = 'web';
         $permission->save();
 
-        return redirect()->route('permission.index')->with('success', 'Hak akses berhasil ditambahkan');
+        return redirect()->route('permissions')->with('status', 'Hak akses berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -52,7 +52,7 @@ class PermissionController extends Controller
         $permission->guard_name = 'web';
         $permission->save();
 
-        return redirect()->route('permission.index')->with('success', 'Hak akses berhasil diupdate');
+        return redirect()->route('permissions')->with('status', 'Hak akses berhasil diupdate');
     }
 
 
@@ -62,6 +62,6 @@ class PermissionController extends Controller
         $permission = Permission::findOrFail($id);
         $permission->delete();
 
-        return redirect()->route('permission.index')->with('success', 'Hak akses berhasil dihapus');
+        return redirect()->route('permissions')->with('status', 'Hak akses berhasil dihapus');
     }
 }

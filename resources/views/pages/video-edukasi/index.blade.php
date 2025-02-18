@@ -17,8 +17,8 @@
 
         <div class="card shadow">
             <div class="card-header">
-                <a href="{{ route('permissions.tambah') }}" class="badge bg-primary text-white">
-                    Tambah Hak Akses
+                <a href="{{ route('video_edukasi.tambah') }}" class="badge bg-primary text-white">
+                    Tambah Video Edukasi
                 </a>
             </div>
             <div class="card-body">
@@ -26,28 +26,40 @@
                     <table class="table table-bordered" style="width: 100%; border: 1;">
                         <thead>
                             <tr>
-                                <th>Hak Akses</th>
+                                <th>Link Url</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ( $permissions as $p )
+                            @forelse ($video_edukasi as $v )
                             <tr>
-                                <td>{{ $p->name  }} </td>
+                                <td>{{ $v->url }}</td>
                                 <td>
-                                    <a href="{{ route('permissions.edit', $p->id) }}" class="badge bg-warning text-white">Edit</a>
-                                    <a href="{{ route('permissions.hapus', $p->id) }}" class="badge bg-danger text-white">Hapus</a>
+                                    <span class="{{ $v->status == 'publish' ? 'badge bg-success text-white' : 'badge bg-danger text-white'}}">
+                                        {{ ucfirst($v->status) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ route('video_edukasi.edit',  $v->id) }}" class="badge bg-warning text-white">
+                                        Edit
+                                    </a>
+
+                                    <a href="{{ route('video_edukasi.hapus', $v->id) }}" class="badge bg-danger text-white">
+                                        Hapus
+                                    </a>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="2" class="text-center">Data Kosong</td>
+                                <td colspan="3" class="text-center">Data Kosong</td>
                             </tr>
                             @endforelse
                         </tbody>
+
                     </table>
 
-                    {{  $permissions->links() }}
+
                 </div>
             </div>
         </div>

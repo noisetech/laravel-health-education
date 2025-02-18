@@ -11,28 +11,30 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $role = Role::with(['permissions'])->orderBy('name', 'asc')->paginate(5);
+        $roles = Role::with(['permissions'])->orderBy('name', 'asc')->paginate(5);
 
-        return view('pages.role.index', compact('role'));
+        return view('pages.role.index', compact('roles'));
     }
 
 
     public function tambah()
     {
-        $pemrission = Permission::all();
-        return view('pages.role.tambah', compact('pemrission'));
+        $permissions = Permission::all();
+        return view('pages.role.tambah', compact('permissions'));
     }
 
 
     public function simpan(Request $request)
     {
         $this->validate($request, [
-            'hak_akses' => 'required',
+            'hak_akses' => 'required|array|min:1',
             'level_pengguna' => 'required|unique:roles,name'
         ], [
             'hak_akses.required' => 'Hak akses tidak boleh kosong',
+            'hak_akses.array' => 'Format hak akses tidak valid',
+            'hak_akses.min' => 'Pilih minimal satu hak akses',
             'level_pengguna.required' => 'Level pengguna tidak boleh kosong',
-            'level.unique' => 'Level pengguna sudah ada'
+            'level_pengguna.unique' => 'Level pengguna sudah ada'
         ]);
 
         DB::beginTransaction();
@@ -45,16 +47,32 @@ class RoleController extends Controller
 
             $role->syncPermissions($request->hak_akses);
 
-            return redirect()->route('role.index')->with('success', 'Role berhasil ditambahkan');
+            DB::commit();
+
+            return redirect()->route('role')->with('success', 'Role berhasil ditambahkan');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('role.index')->with('error', 'Role gagal ditambahkan');
+            return redirect()->route('role')->with('error', 'Role gagal ditambahkan');
         }
+    }
+
+
+    public function edit($id)
+    {
+        $role = Role::findOrFail($id);
+
+        $permissions = Permission::all();
+
+        return view('pages.role.edit', [
+            'role' => $role,
+            'permissions' => $permissions
+        ]);
     }
 
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $this->validate($request, [
             'hak_akses' => 'required',
             'level_pengguna' => 'required|unique:roles,name,' . $id
@@ -74,15 +92,18 @@ class RoleController extends Controller
 
             $role->syncPermissions($request->hak_akses);
 
-            return redirect()->route('role.index')->with('success', 'Role berhasil diperbarui');
+            DB::commit();
+
+            return redirect()->route('role')->with('success', 'Role berhasil diperbarui');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('role.index')->with('error', 'Role gagal diperbarui');
+            return redirect()->route('role')->with('error', 'Role gagal diperbarui');
         }
     }
 
 
-    public function hapus($id){
+    public function hapus($id)
+    {
         $role = Role::findOrFail($id);
 
         $role->delete();

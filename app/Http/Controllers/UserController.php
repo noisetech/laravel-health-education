@@ -12,9 +12,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with(['role'])->orderBy('name', 'asc')->paginate(5);
+        $users = User::with(['roles'])->orderBy('name', 'asc')->paginate(5);
 
-        return view('pages.user.index', compact('users'));
+        return view('pages.users.index', compact('users'));
     }
 
     public function tambah()
