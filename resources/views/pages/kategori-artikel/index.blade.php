@@ -26,6 +26,7 @@
                     <table class="table table-bordered" style="width: 100%; border: 1;">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Kategori</th>
                                 <th>Aksi</th>
                             </tr>
@@ -33,6 +34,7 @@
                         <tbody>
                             @forelse ( $kategori_artikel as $k )
                             <tr>
+                                <td>{{ ($kategori_artikel->currentPage() - 1) * $kategori_artikel->perPage() + $loop->iteration }}</td>
                                 <td>{{ $k->kategori  }} </td>
                                 <td>
                                     <a href="{{ route('kategori-artikel.edit', $k->id) }}" class="badge bg-warning text-white">Edit</a>

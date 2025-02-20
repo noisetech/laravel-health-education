@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ asset('be/dist/assets/modules/summernote/summernote-bs4.css') }}">
   <link rel="stylesheet" href="{{ asset('be/dist/assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
   <link rel="stylesheet" href="{{ asset('be/dist/assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.25.0/contents.min.css">
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('be/dist/assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('be/dist/assets/css/components.css') }}">

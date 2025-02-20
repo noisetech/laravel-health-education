@@ -17,7 +17,7 @@
 
         <div class="card shadow">
             <div class="card-header">
-                <a href="{{ route('permissions.tambah') }}" class="badge bg-primary text-white">
+                <a href="{{ route('artikel.tambah') }}" class="badge bg-primary text-white">
                     Tambah Artikel
                 </a>
             </div>

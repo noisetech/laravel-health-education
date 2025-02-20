@@ -26,10 +26,10 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col" style="text-align: center;width: 6%">NO.</th>
+                                <th scope="col" style="text-align: center;width: 6%">No</th>
                                 <th scope="col" style="width: 15%">Level Pengguna</th>
                                 <th scope="col">Hak Akses</th>
-                                <th scope="col" style="width: 15%;text-align: center">AKSI</th>
+                                <th scope="col" style="width: 15%;text-align: center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,10 +43,6 @@
                                     @endforeach
                                 </td>
                                 <td class="text-center">
-
-                                    @if ($role->name == 'admin' || $role->name == 'ADMIN' || $role->name == 'super admin' || $role->name == 'Super admin' || $role->name == 'SUPER ADMIN')
-                                    -
-                                    @else
                                     <a href="{{ route('role.edit', $role->id) }}" class="badge bg-warning text-white">
                                         Edit
                                     </a>
@@ -54,7 +50,6 @@
                                     <a href="{{ route('role.hapus', $role->id) }}" class="badge bg-danger text-white">
                                         Hapus
                                     </a>
-                                    @endif
                                 </td>
                             </tr>
                             @endforeach

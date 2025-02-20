@@ -22,7 +22,12 @@ class ArtikelController extends Controller
 
     public function tambah()
     {
-        return view('pages.artikel.tambah');
+        $kategori_artikel = KategoriArtikel::all();
+        $tag_artikel = TagArtikel::all();
+        return view('pages.artikel.tambah', [
+            'kategori_artikel' => $kategori_artikel,
+            'tag_artikel' => $tag_artikel,
+        ]);
     }
 
     public function simpan(Request $request)
@@ -107,5 +112,21 @@ class ArtikelController extends Controller
         $artikel->delete();
 
         return redirect()->route('artikel.index');
+    }
+
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '_' . Str::slug($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
+
+            $file->storeAs('assets/upload-image-artikel', $filename, 'public');
+
+            return response()->json([
+                'location' => asset('storage/assets/upload-image-artikel/' . $filename)
+            ]);
+        }
+
+        return response()->json(['error' => 'No file uploaded.'], 400);
     }
 }

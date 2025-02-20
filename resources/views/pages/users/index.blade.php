@@ -40,7 +40,7 @@
                                 <td>
                                     @if(!empty($u->getRoleNames()))
                                     @foreach($u->getRoleNames() as $role)
-                                    <label class="badge badge-success">{{ $role }}</label>
+                                    <label class="badge badge-primary">{{ $role }}</label>
                                     @endforeach
                                     @endif
                                 </td>

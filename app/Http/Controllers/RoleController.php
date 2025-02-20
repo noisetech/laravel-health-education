@@ -72,7 +72,6 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $this->validate($request, [
             'hak_akses' => 'required',
             'level_pengguna' => 'required|unique:roles,name,' . $id

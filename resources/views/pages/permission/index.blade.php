@@ -26,6 +26,7 @@
                     <table class="table table-bordered" style="width: 100%; border: 1;">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Hak Akses</th>
                                 <th>Aksi</th>
                             </tr>
@@ -33,6 +34,7 @@
                         <tbody>
                             @forelse ( $permissions as $p )
                             <tr>
+                            <td>{{ ($permissions->currentPage() - 1) * $permissions->perPage() + $loop->iteration }}</td>
                                 <td>{{ $p->name  }} </td>
                                 <td>
                                     <a href="{{ route('permissions.edit', $p->id) }}" class="badge bg-warning text-white">Edit</a>
